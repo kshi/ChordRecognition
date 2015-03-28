@@ -1,20 +1,24 @@
 function [ Y ] = labelSong( model,F,L )
-
+	 
 n = size(F,2);
 m = size(F,1);
-Y = zeros(n,1);
 
-for t=1:n
-    feature = [];
-    for i=t-memory:t+foresight
-        if i < 1 || i > n
-            feature = [feature; zeros(m^2,1)];
-        else
-            feature = [feature; kron(F(:,i),F(:,i))];
-        end
+past = zeros(25,2);
+scores = zeros(25,n);
+labelmap = zeros(25,n);
+
+feature = makeFeature(0,0,F(:,1));
+scores(:,1) = log(sum(bsxfun(@times,reshape(model.w,numFeatures,25),feature),1));
+
+for t=2:n
+    scoreupdate = zeros(25,25);
+    for f=1:25
+    	feature = makeFeature(past(i,1),past(i,2),F(:,t));
+	scoreupdate(f,:) = sum(bsxfun(@times,reshape(model.w,numFeatures,25),feature),1);
     end
-    [~,label] = max(sum(bsxfun(@times,reshape(model.w,numFeatures,25),feature),1));    
-    Y(t) = label-1;
+
+    
+
 end
 
 if nargin == 3
