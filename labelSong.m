@@ -3,9 +3,6 @@ function [ Y ] = labelSong( model,F,L )
 n = size(F,2);
 m = size(F,1);
 Y = zeros(n,1);
-memory = 1;
-foresight = 2;
-numFeatures = m^2 * (1+memory+foresight);
 
 for t=1:n
     feature = [];

@@ -1,4 +1,4 @@
-folder = 'cv';
+folder = 'train';
 
 files = dir(folder);
 init;
